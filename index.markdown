@@ -1,0 +1,4 @@
+---
+layout: default
+theme: jekyll-theme-architect
+---
