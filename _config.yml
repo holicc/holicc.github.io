@@ -1,1 +1,4 @@
+name: "Joe"
 theme: jekyll-theme-architect
+author: "lu.longshan"
+atom-baseurl: "https://lulongshan.github.io/blog/"
