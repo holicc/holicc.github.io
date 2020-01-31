@@ -1,13 +1,4 @@
----
-title: 'Learning gfs ... '
-layout: post
-guid: urn:uuid:590e39e7-98b0-4dab-b921-854242301b3q
-tags:
-    - file-system
-    - programing
----
-
-## What is ?
+## What is GFS?
 
 Basiclly gfs is a storage application,deployed within Google as the storage platform.
 
@@ -30,7 +21,7 @@ Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s dat
 ## Architecture
 
 GFS has three important role:*Single Master* *ChunkSerfers* *Clients* 
-![Figure 1](/media/files/images/figure.png)
+![Figure 1](/images/figure.png)
 
 Single Master: Infomartion center hub.
 > The master maintains all file system metadata.

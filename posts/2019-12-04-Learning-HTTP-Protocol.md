@@ -1,11 +1,3 @@
----
-title: '阅读《HTTP权威指南》'
-layout: post
-guid: urn:uuid:d8564c0b-cbff-4fdd-aee4-d7406f81bxnd
-tags:
-    - network
----
-
 ### TCP连接相关
 
  - *并行连接*：会消耗更多的资源（比如内存），也会受到带宽的限制，打开连接数量有限，会受到TCP慢启动和拥塞适应的影响。**所以也不一定快**。用户体验上会感觉快了。

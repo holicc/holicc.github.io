@@ -1,11 +1,3 @@
----
-title: 'Dependency Injection'
-layout: post
-guid: urn:uuid:4fa00e79-263c-42c2-a1ba-d8223c5b52dc
-tags:
-    - programing
----
-
 ## What is [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) 
 
 依赖注入（DI）指的通过一个对象依赖另一个对象的一种技术方式，例如在Client对象中依赖一个Service类，我们所做的方式不是在Client对象中创建一个新的Service类或者去寻找一个Service类，而是通过把Service类当作为Client对象的一个状态或者说一个属性传递给Client对象。

@@ -1,11 +1,3 @@
----
-title: 'About-OAuth2'
-layout: post
-guid: urn:uuid:30727e46-bc3a-410f-8099-fa97052ba5f8
-tags:
-    - oatuh2
----
-
 ## Background 
 
 Recently,out team have to divided original system to two microservice system. let's call they system A and system B.My goal is to implement a **Authorization Server** and Single-Sign-On. So i decided to use Spring security framework to do this.It's not easy as i think,i got lots of problems.Finally i made it,and i want to recored this to review.

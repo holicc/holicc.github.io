@@ -1,19 +1,10 @@
----
-title: 'Quarkus hot reload with IDEA'
-layout: post
-guid: urn:uuid:590e39e7-98b0-4dab-b921-854242301b3o
-tags:
-    - framework
-    - programing
----
-
 ## [Quarkus](https://quarkus.io/)
 
 > A Kubernetes Native Java stack tailored for GraalVM & OpenJDK HotSpot, crafted from the best of breed Java libraries and standards
 
 For me ? quarkus is a standard  framework,it combine lots of useful web framework.And it provides amazing boot time and optimizes developer joy.Also it can **compile to native app** and support **hot reload**.YES,**hot reload with IDEA** is really awsome!when i found i can use IDEA deloyment Tools automatic upload file to a server machine and it will automic reload the server.Just like below picture say 👇:
 
-![devjoy](/media/files/images/devjoy.png)
+![devjoy](/images/devjoy.png)
 
 It sounds easy but things not going well 😟.
 
@@ -21,14 +12,14 @@ It sounds easy but things not going well 😟.
 
 I configuraed the IDEA delopyment tool and upload the [exmpale project](https://quarkus.io/guides/getting-started-guide) to server machine.
 
-![deployment-conf](/media/files/images/deployment-conf.jpg)
+![deployment-conf](/images/deployment-conf.jpg)
 
 execute cmd to start up :
 > ./mvnw compile quarkus:dev
 
 And everythins same to be fine :
 
-![running-well](/media/files/images/running.png)
+![running-well](/images/running.png)
 
 But no matter how i modify the *ExampleResource.java*,it didn't touch the hot reload.The *ExampleResource.java* did upload to the server machine.Why quarkus server not hot reload? So i using **vim** modify the *ExampleResource.java* on server machine,quarkus did hot reload.This is really confuse me.I'm wandering how's the quarkus hot reload works ? Maybe i can found why IDEA automatic upload not trigger the hot reload.
 
@@ -107,7 +98,7 @@ Finally i found key method on **checkForChangedClasses()**.
 
 So i change the IDEA config like this :
 
-![IDEA-conf](/media/files/images/finally-conf.png)
+![IDEA-conf](/images/finally-conf.png)
 
 
 Enjoying Coding with quarkus 👏!
