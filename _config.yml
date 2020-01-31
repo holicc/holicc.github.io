@@ -2,3 +2,11 @@ name: "Joe"
 theme: jekyll-theme-architect
 author: "lu.longshan"
 encoding: "utf-8"
+
+navigations:
+  - title: Archive
+    href: /archive.html
+  - title: Tags
+    href: /tags.html
+  - title: About
+    href: /about.html
