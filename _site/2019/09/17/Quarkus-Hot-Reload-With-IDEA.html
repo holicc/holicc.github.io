@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link rel="stylesheet" href="/assets/css/main.css">
+
+        <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Quarkus Hot Reload With IDEA | Joe</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Quarkus Hot Reload With IDEA" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Quarkus A Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards For me ? quarkus is a standard framework,it combine lots of useful web framework.And it provides amazing boot time and optimizes developer joy.Also it can compile to native app and support hot reload.YES,hot reload with IDEA is really awsome!when i found i can use IDEA deloyment Tools automatic upload file to a server machine and it will automic reload the server.Just like below picture say 👇: It sounds easy but things not going well 😟. First try I configuraed the IDEA delopyment tool and upload the exmpale project to server machine. execute cmd to start up : ./mvnw compile quarkus:dev And everythins same to be fine : But no matter how i modify the ExampleResource.java,it didn’t touch the hot reload.The ExampleResource.java did upload to the server machine.Why quarkus server not hot reload? So i using vim modify the ExampleResource.java on server machine,quarkus did hot reload.This is really confuse me.I’m wandering how’s the quarkus hot reload works ? Maybe i can found why IDEA automatic upload not trigger the hot reload. Second Try I notice that when i modify a file and only when i vistied the resource path on borwer quarkus would do hot reload.So i debug on the IDEA and watching what happend. First i found the restart code (DevModMain.java) on github: public synchronized void restartApp(Set&lt;String&gt; changedResources) { stop(); Timing.restart(); doStart(true, changedResources); } And keep digging : RuntimeUpdatesProcessor.java @Override public boolean doScan(boolean userInitiated) throws IOException { final long startNanoseconds = System.nanoTime(); for (Runnable step : preScanSteps) { try { step.run(); } catch (Throwable t) { log.error(&quot;Pre Scan step failed&quot;, t); } } //This is key point boolean classChanged = checkForChangedClasses(); Set&lt;String&gt; filesChanged = checkForFileChange(); ... } Finally i found key method on checkForChangedClasses(). RuntimeUpdatesProcessor.java boolean checkForChangedClasses() throws IOException { boolean hasChanges = false; for (DevModeContext.ModuleInfo module : context.getModules()) { final List&lt;Path&gt; moduleChangedSourceFilePaths = new ArrayList&lt;&gt;(); for (String sourcePath : module.getSourcePaths()) { final Set&lt;File&gt; changedSourceFiles; try (final Stream&lt;Path&gt; sourcesStream = Files.walk(Paths.get(sourcePath))) { changedSourceFiles = sourcesStream .parallel() .filter(p -&gt; matchingHandledExtension(p).isPresent() &amp;&amp; wasRecentlyModified(p)) .map(Path::toFile) //Needing a concurrent Set, not many standard options: .collect(Collectors.toCollection(ConcurrentSkipListSet::new)); } ... } wasRecentlyModified(p) private boolean wasRecentlyModified(final Path p) { try { long sourceMod = Files.getLastModifiedTime(p).toMillis(); return sourceMod &gt; lastChange; } catch (IOException e) { throw new RuntimeException(e); } } quarkus hot reload depends on compare file last modified time with system last change time. the whole process is : when i send http request,quarkus will handle the request and check the resource file whether to modify and do hot reload. So i change the IDEA config like this : Enjoying Coding with quarkus 👏!" />
+<meta property="og:description" content="Quarkus A Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards For me ? quarkus is a standard framework,it combine lots of useful web framework.And it provides amazing boot time and optimizes developer joy.Also it can compile to native app and support hot reload.YES,hot reload with IDEA is really awsome!when i found i can use IDEA deloyment Tools automatic upload file to a server machine and it will automic reload the server.Just like below picture say 👇: It sounds easy but things not going well 😟. First try I configuraed the IDEA delopyment tool and upload the exmpale project to server machine. execute cmd to start up : ./mvnw compile quarkus:dev And everythins same to be fine : But no matter how i modify the ExampleResource.java,it didn’t touch the hot reload.The ExampleResource.java did upload to the server machine.Why quarkus server not hot reload? So i using vim modify the ExampleResource.java on server machine,quarkus did hot reload.This is really confuse me.I’m wandering how’s the quarkus hot reload works ? Maybe i can found why IDEA automatic upload not trigger the hot reload. Second Try I notice that when i modify a file and only when i vistied the resource path on borwer quarkus would do hot reload.So i debug on the IDEA and watching what happend. First i found the restart code (DevModMain.java) on github: public synchronized void restartApp(Set&lt;String&gt; changedResources) { stop(); Timing.restart(); doStart(true, changedResources); } And keep digging : RuntimeUpdatesProcessor.java @Override public boolean doScan(boolean userInitiated) throws IOException { final long startNanoseconds = System.nanoTime(); for (Runnable step : preScanSteps) { try { step.run(); } catch (Throwable t) { log.error(&quot;Pre Scan step failed&quot;, t); } } //This is key point boolean classChanged = checkForChangedClasses(); Set&lt;String&gt; filesChanged = checkForFileChange(); ... } Finally i found key method on checkForChangedClasses(). RuntimeUpdatesProcessor.java boolean checkForChangedClasses() throws IOException { boolean hasChanges = false; for (DevModeContext.ModuleInfo module : context.getModules()) { final List&lt;Path&gt; moduleChangedSourceFilePaths = new ArrayList&lt;&gt;(); for (String sourcePath : module.getSourcePaths()) { final Set&lt;File&gt; changedSourceFiles; try (final Stream&lt;Path&gt; sourcesStream = Files.walk(Paths.get(sourcePath))) { changedSourceFiles = sourcesStream .parallel() .filter(p -&gt; matchingHandledExtension(p).isPresent() &amp;&amp; wasRecentlyModified(p)) .map(Path::toFile) //Needing a concurrent Set, not many standard options: .collect(Collectors.toCollection(ConcurrentSkipListSet::new)); } ... } wasRecentlyModified(p) private boolean wasRecentlyModified(final Path p) { try { long sourceMod = Files.getLastModifiedTime(p).toMillis(); return sourceMod &gt; lastChange; } catch (IOException e) { throw new RuntimeException(e); } } quarkus hot reload depends on compare file last modified time with system last change time. the whole process is : when i send http request,quarkus will handle the request and check the resource file whether to modify and do hot reload. So i change the IDEA config like this : Enjoying Coding with quarkus 👏!" />
+<link rel="canonical" href="http://localhost:4000/2019/09/17/Quarkus-Hot-Reload-With-IDEA.html" />
+<meta property="og:url" content="http://localhost:4000/2019/09/17/Quarkus-Hot-Reload-With-IDEA.html" />
+<meta property="og:site_name" content="Joe" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-17T00:00:00+08:00" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/2019/09/17/Quarkus-Hot-Reload-With-IDEA.html","headline":"Quarkus Hot Reload With IDEA","dateModified":"2019-09-17T00:00:00+08:00","datePublished":"2019-09-17T00:00:00+08:00","description":"Quarkus A Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards For me ? quarkus is a standard framework,it combine lots of useful web framework.And it provides amazing boot time and optimizes developer joy.Also it can compile to native app and support hot reload.YES,hot reload with IDEA is really awsome!when i found i can use IDEA deloyment Tools automatic upload file to a server machine and it will automic reload the server.Just like below picture say 👇: It sounds easy but things not going well 😟. First try I configuraed the IDEA delopyment tool and upload the exmpale project to server machine. execute cmd to start up : ./mvnw compile quarkus:dev And everythins same to be fine : But no matter how i modify the ExampleResource.java,it didn’t touch the hot reload.The ExampleResource.java did upload to the server machine.Why quarkus server not hot reload? So i using vim modify the ExampleResource.java on server machine,quarkus did hot reload.This is really confuse me.I’m wandering how’s the quarkus hot reload works ? Maybe i can found why IDEA automatic upload not trigger the hot reload. Second Try I notice that when i modify a file and only when i vistied the resource path on borwer quarkus would do hot reload.So i debug on the IDEA and watching what happend. First i found the restart code (DevModMain.java) on github: public synchronized void restartApp(Set&lt;String&gt; changedResources) { stop(); Timing.restart(); doStart(true, changedResources); } And keep digging : RuntimeUpdatesProcessor.java @Override public boolean doScan(boolean userInitiated) throws IOException { final long startNanoseconds = System.nanoTime(); for (Runnable step : preScanSteps) { try { step.run(); } catch (Throwable t) { log.error(&quot;Pre Scan step failed&quot;, t); } } //This is key point boolean classChanged = checkForChangedClasses(); Set&lt;String&gt; filesChanged = checkForFileChange(); ... } Finally i found key method on checkForChangedClasses(). RuntimeUpdatesProcessor.java boolean checkForChangedClasses() throws IOException { boolean hasChanges = false; for (DevModeContext.ModuleInfo module : context.getModules()) { final List&lt;Path&gt; moduleChangedSourceFilePaths = new ArrayList&lt;&gt;(); for (String sourcePath : module.getSourcePaths()) { final Set&lt;File&gt; changedSourceFiles; try (final Stream&lt;Path&gt; sourcesStream = Files.walk(Paths.get(sourcePath))) { changedSourceFiles = sourcesStream .parallel() .filter(p -&gt; matchingHandledExtension(p).isPresent() &amp;&amp; wasRecentlyModified(p)) .map(Path::toFile) //Needing a concurrent Set, not many standard options: .collect(Collectors.toCollection(ConcurrentSkipListSet::new)); } ... } wasRecentlyModified(p) private boolean wasRecentlyModified(final Path p) { try { long sourceMod = Files.getLastModifiedTime(p).toMillis(); return sourceMod &gt; lastChange; } catch (IOException e) { throw new RuntimeException(e); } } quarkus hot reload depends on compare file last modified time with system last change time. the whole process is : when i send http request,quarkus will handle the request and check the resource file whether to modify and do hot reload. So i change the IDEA config like this : Enjoying Coding with quarkus 👏!","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/09/17/Quarkus-Hot-Reload-With-IDEA.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    </head>
+
+    <body style="background-color: rgba(220, 238, 203, 0.781)">
+        <script async src="/assets/js/theme.min.js"></script>
+
+        <header>
+            
+        </header>
+
+        <main>
+            <article>
+                <h1 class="post-headline">Quarkus Hot Reload With IDEA</h1>
+<p class="meta"><small>September 17, 2019</small></p>
+
+<h2 id="quarkus"><a href="https://quarkus.io/">Quarkus</a></h2>
+
+<blockquote>
+  <p>A Kubernetes Native Java stack tailored for GraalVM &amp; OpenJDK HotSpot, crafted from the best of breed Java libraries and standards</p>
+</blockquote>
+
+<p>For me ? quarkus is a standard  framework,it combine lots of useful web framework.And it provides amazing boot time and optimizes developer joy.Also it can <strong>compile to native app</strong> and support <strong>hot reload</strong>.YES,<strong>hot reload with IDEA</strong> is really awsome!when i found i can use IDEA deloyment Tools automatic upload file to a server machine and it will automic reload the server.Just like below picture say 👇:</p>
+
+<p><img src="/assets/images/devjoy.png" alt="devjoy" /></p>
+
+<p>It sounds easy but things not going well 😟.</p>
+
+<h2 id="first-try">First try</h2>
+
+<p>I configuraed the IDEA delopyment tool and upload the <a href="https://quarkus.io/guides/getting-started-guide">exmpale project</a> to server machine.</p>
+
+<p><img src="/assets/images/deployment-conf.jpg" alt="deployment-conf" /></p>
+
+<p>execute cmd to start up :</p>
+<blockquote>
+  <p>./mvnw compile quarkus:dev</p>
+</blockquote>
+
+<p>And everythins same to be fine :</p>
+
+<p><img src="/assets/images/running.png" alt="running-well" /></p>
+
+<p>But no matter how i modify the <em>ExampleResource.java</em>,it didn’t touch the hot reload.The <em>ExampleResource.java</em> did upload to the server machine.Why quarkus server not hot reload? So i using <strong>vim</strong> modify the <em>ExampleResource.java</em> on server machine,quarkus did hot reload.This is really confuse me.I’m wandering how’s the quarkus hot reload works ? Maybe i can found why IDEA automatic upload not trigger the hot reload.</p>
+
+<h2 id="second-try">Second Try</h2>
+
+<p>I notice that when i modify a file and only when i vistied the resource path on borwer quarkus would do hot reload.So i debug on the IDEA and watching what happend.</p>
+
+<p>First i found the restart code (<a href="https://github.com/quarkusio/quarkus/blob/master/core/devmode/src/main/java/io/quarkus/dev/DevModeMain.java">DevModMain.java</a>) on github:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">restartApp</span><span class="o">(</span><span class="nc">Set</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">changedResources</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">stop</span><span class="o">();</span>
+        <span class="nc">Timing</span><span class="o">.</span><span class="na">restart</span><span class="o">();</span>
+        <span class="n">doStart</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="n">changedResources</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>And keep digging :</p>
+
+<p><strong>RuntimeUpdatesProcessor.java</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">doScan</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">userInitiated</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="kt">long</span> <span class="n">startNanoseconds</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Runnable</span> <span class="n">step</span> <span class="o">:</span> <span class="n">preScanSteps</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">step</span><span class="o">.</span><span class="na">run</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"Pre Scan step failed"</span><span class="o">,</span> <span class="n">t</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">//This is key point </span>
+        <span class="kt">boolean</span> <span class="n">classChanged</span> <span class="o">=</span> <span class="n">checkForChangedClasses</span><span class="o">();</span>
+        <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">filesChanged</span> <span class="o">=</span> <span class="n">checkForFileChange</span><span class="o">();</span>
+
+       <span class="o">...</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>Finally i found key method on <strong>checkForChangedClasses()</strong>.</p>
+
+<p><strong>RuntimeUpdatesProcessor.java</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kt">boolean</span> <span class="nf">checkForChangedClasses</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">hasChanges</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">DevModeContext</span><span class="o">.</span><span class="na">ModuleInfo</span> <span class="n">module</span> <span class="o">:</span> <span class="n">context</span><span class="o">.</span><span class="na">getModules</span><span class="o">())</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Path</span><span class="o">&gt;</span> <span class="n">moduleChangedSourceFilePaths</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">sourcePath</span> <span class="o">:</span> <span class="n">module</span><span class="o">.</span><span class="na">getSourcePaths</span><span class="o">())</span> <span class="o">{</span>
+                <span class="kd">final</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">File</span><span class="o">&gt;</span> <span class="n">changedSourceFiles</span><span class="o">;</span>
+                <span class="k">try</span> <span class="o">(</span><span class="kd">final</span> <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Path</span><span class="o">&gt;</span> <span class="n">sourcesStream</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">walk</span><span class="o">(</span><span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">sourcePath</span><span class="o">)))</span> <span class="o">{</span>
+                    <span class="n">changedSourceFiles</span> <span class="o">=</span> <span class="n">sourcesStream</span>
+                            <span class="o">.</span><span class="na">parallel</span><span class="o">()</span>
+                            <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">matchingHandledExtension</span><span class="o">(</span><span class="n">p</span><span class="o">).</span><span class="na">isPresent</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">wasRecentlyModified</span><span class="o">(</span><span class="n">p</span><span class="o">))</span>
+                            <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">Path:</span><span class="o">:</span><span class="n">toFile</span><span class="o">)</span>
+                            <span class="c1">//Needing a concurrent Set, not many standard options:</span>
+                            <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toCollection</span><span class="o">(</span><span class="nl">ConcurrentSkipListSet:</span><span class="o">:</span><span class="k">new</span><span class="o">));</span>
+                <span class="o">}</span>
+                <span class="o">...</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>wasRecentlyModified(p)</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">wasRecentlyModified</span><span class="o">(</span><span class="kd">final</span> <span class="nc">Path</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kt">long</span> <span class="n">sourceMod</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">getLastModifiedTime</span><span class="o">(</span><span class="n">p</span><span class="o">).</span><span class="na">toMillis</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">sourceMod</span> <span class="o">&gt;</span> <span class="n">lastChange</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>quarkus hot reload depends on compare file last modified time with system last change time.</strong> the whole process is : when i send http request,quarkus will handle the request and check the resource file whether to modify and do hot reload.</p>
+
+<p>So i change the IDEA config like this :</p>
+
+<p><img src="/assets/images/finally-conf.png" alt="IDEA-conf" /></p>
+
+<p>Enjoying Coding with quarkus 👏!</p>
+
+
+<!-- Comments only for posts -->
+
+    
+        <hr class="divider">
+<div id="disqus_thread"></div>
+<script defer>
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//takijoe.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments</noscript>
+                              
+    
+
+
+            </article>
+        </main>
+
+        <footer>
+            <p class="copy">
+                <small>Copyrights by
+                    Joe
+                    | Developed by
+                    <a href="http://webjeda.com">webjeda</a>
+                </small>
+            </p>
+        </footer>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157580785-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157580785-1');
+</script>
+    </body>
+
+</html>

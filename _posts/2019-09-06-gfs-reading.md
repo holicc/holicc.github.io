@@ -1,8 +1,17 @@
+---
+layout: post
+title: The Google File System
+---
+
+
+
+
 ## What is GFS?
 
 Basiclly gfs is a storage application,deployed within Google as the storage platform.
 
 Google file system a **scalable** **distributed** file system for large distributed data-intensive applications. It provides **fault tolerance** while running on inexpensive commodity hardware, and it delivers high aggregate performance to a large number of clients.
+
 
 ## Using for ?
 
@@ -21,7 +30,7 @@ Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s dat
 ## Architecture
 
 GFS has three important role:*Single Master* *ChunkSerfers* *Clients* 
-![Figure 1](/images/figure.png)
+![Figure 1](/assets/images/figure.png)
 
 Single Master: Infomartion center hub.
 > The master maintains all file system metadata.

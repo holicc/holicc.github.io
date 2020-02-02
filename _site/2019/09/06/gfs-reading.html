@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link rel="stylesheet" href="/assets/css/main.css">
+
+        <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The Google File System | Joe</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The Google File System" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="What is GFS? Basiclly gfs is a storage application,deployed within Google as the storage platform. Google file system a scalable distributed file system for large distributed data-intensive applications. It provides fault tolerance while running on inexpensive commodity hardware, and it delivers high aggregate performance to a large number of clients. Using for ? Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s data processing needs. Problems ? First,when hundreds or event thousands client or server application are runing , they may be crashed at anytime by any reasons.So the gfs must be automatic recovery from crash. Second,with the data growing ,it is hard to manage the data sets.As a results ,we must guarantee the performence such as I/O operation and block sizes have to be revisited. Third,consider reading and writing,using data.For example the mutable data by appending new data rather than overwriting existing data,share data characteristics. Some may be archival data. Some may be in- termediate results produced on one machine and processed on another, whether simultaneously or later in time. Fourth,elegent API design make system flexible and extendable.Also provided atomic append API to keep system stable and safty. Architecture GFS has three important role:Single Master ChunkSerfers Clients Single Master: Infomartion center hub. The master maintains all file system metadata. The master peri- odically communicates with each chunkserver in HeartBeat messages to give it instructions and collect its state deal with sophisticated chunk placement and replication logic.But master doesn’t read or write data to client. Metadata. Chunk Locations. Operation Log chunkservers: just like databases. Chunkservers store chunks on local disks as Linux files and read or write chunk data specified by a chunk handle and byte range By default, we store three replicas, though users can designate different replication levels for different regions of the file namespace. client: bridge of master and chunkservers Clients interact with the master for metadata opera- tions, but all data-bearing communication goes directly to the chunkservers. Neither the client nor the chunkserver caches file data. Consistency Model The state of file region:consistent,defined,the two state combain with two types(serial,concurrent) just like database’s transcations ?" />
+<meta property="og:description" content="What is GFS? Basiclly gfs is a storage application,deployed within Google as the storage platform. Google file system a scalable distributed file system for large distributed data-intensive applications. It provides fault tolerance while running on inexpensive commodity hardware, and it delivers high aggregate performance to a large number of clients. Using for ? Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s data processing needs. Problems ? First,when hundreds or event thousands client or server application are runing , they may be crashed at anytime by any reasons.So the gfs must be automatic recovery from crash. Second,with the data growing ,it is hard to manage the data sets.As a results ,we must guarantee the performence such as I/O operation and block sizes have to be revisited. Third,consider reading and writing,using data.For example the mutable data by appending new data rather than overwriting existing data,share data characteristics. Some may be archival data. Some may be in- termediate results produced on one machine and processed on another, whether simultaneously or later in time. Fourth,elegent API design make system flexible and extendable.Also provided atomic append API to keep system stable and safty. Architecture GFS has three important role:Single Master ChunkSerfers Clients Single Master: Infomartion center hub. The master maintains all file system metadata. The master peri- odically communicates with each chunkserver in HeartBeat messages to give it instructions and collect its state deal with sophisticated chunk placement and replication logic.But master doesn’t read or write data to client. Metadata. Chunk Locations. Operation Log chunkservers: just like databases. Chunkservers store chunks on local disks as Linux files and read or write chunk data specified by a chunk handle and byte range By default, we store three replicas, though users can designate different replication levels for different regions of the file namespace. client: bridge of master and chunkservers Clients interact with the master for metadata opera- tions, but all data-bearing communication goes directly to the chunkservers. Neither the client nor the chunkserver caches file data. Consistency Model The state of file region:consistent,defined,the two state combain with two types(serial,concurrent) just like database’s transcations ?" />
+<link rel="canonical" href="http://localhost:4000/2019/09/06/gfs-reading.html" />
+<meta property="og:url" content="http://localhost:4000/2019/09/06/gfs-reading.html" />
+<meta property="og:site_name" content="Joe" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-06T00:00:00+08:00" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/2019/09/06/gfs-reading.html","headline":"The Google File System","dateModified":"2019-09-06T00:00:00+08:00","datePublished":"2019-09-06T00:00:00+08:00","description":"What is GFS? Basiclly gfs is a storage application,deployed within Google as the storage platform. Google file system a scalable distributed file system for large distributed data-intensive applications. It provides fault tolerance while running on inexpensive commodity hardware, and it delivers high aggregate performance to a large number of clients. Using for ? Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s data processing needs. Problems ? First,when hundreds or event thousands client or server application are runing , they may be crashed at anytime by any reasons.So the gfs must be automatic recovery from crash. Second,with the data growing ,it is hard to manage the data sets.As a results ,we must guarantee the performence such as I/O operation and block sizes have to be revisited. Third,consider reading and writing,using data.For example the mutable data by appending new data rather than overwriting existing data,share data characteristics. Some may be archival data. Some may be in- termediate results produced on one machine and processed on another, whether simultaneously or later in time. Fourth,elegent API design make system flexible and extendable.Also provided atomic append API to keep system stable and safty. Architecture GFS has three important role:Single Master ChunkSerfers Clients Single Master: Infomartion center hub. The master maintains all file system metadata. The master peri- odically communicates with each chunkserver in HeartBeat messages to give it instructions and collect its state deal with sophisticated chunk placement and replication logic.But master doesn’t read or write data to client. Metadata. Chunk Locations. Operation Log chunkservers: just like databases. Chunkservers store chunks on local disks as Linux files and read or write chunk data specified by a chunk handle and byte range By default, we store three replicas, though users can designate different replication levels for different regions of the file namespace. client: bridge of master and chunkservers Clients interact with the master for metadata opera- tions, but all data-bearing communication goes directly to the chunkservers. Neither the client nor the chunkserver caches file data. Consistency Model The state of file region:consistent,defined,the two state combain with two types(serial,concurrent) just like database’s transcations ?","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/09/06/gfs-reading.html"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    </head>
+
+    <body style="background-color: rgba(220, 238, 203, 0.781)">
+        <script async src="/assets/js/theme.min.js"></script>
+
+        <header>
+            
+        </header>
+
+        <main>
+            <article>
+                <h1 class="post-headline">The Google File System</h1>
+<p class="meta"><small>September 06, 2019</small></p>
+
+<h2 id="what-is-gfs">What is GFS?</h2>
+
+<p>Basiclly gfs is a storage application,deployed within Google as the storage platform.</p>
+
+<p>Google file system a <strong>scalable</strong> <strong>distributed</strong> file system for large distributed data-intensive applications. It provides <strong>fault tolerance</strong> while running on inexpensive commodity hardware, and it delivers high aggregate performance to a large number of clients.</p>
+
+<h2 id="using-for-">Using for ?</h2>
+
+<p>Google File Sys- tem (GFS) to meet the rapidly growing demands of Google’s data processing needs.</p>
+
+<h2 id="problems-">Problems ?</h2>
+
+<p><strong>First</strong>,when hundreds or event thousands client or server application are runing , they may be crashed at anytime by any reasons.So the gfs must be automatic recovery from crash.</p>
+
+<p><strong>Second</strong>,with the data growing ,it is hard to manage the data sets.As a results ,we must guarantee the performence such as I/O operation and block sizes have to be revisited.</p>
+
+<p><strong>Third</strong>,consider reading and writing,using data.For example the mutable data by appending new data rather than overwriting existing data,share data characteristics. Some may be archival data. Some may be in- termediate results produced on one machine and processed on another, whether simultaneously or later in time.</p>
+
+<p><strong>Fourth</strong>,elegent API design make system flexible and extendable.Also provided atomic append API to keep system stable and safty.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>GFS has three important role:<em>Single Master</em> <em>ChunkSerfers</em> <em>Clients</em> 
+<img src="/assets/images/figure.png" alt="Figure 1" /></p>
+
+<p>Single Master: Infomartion center hub.</p>
+<blockquote>
+  <p>The master maintains all file system metadata.
+The master peri- odically communicates with each chunkserver in HeartBeat messages to give it instructions and collect its state</p>
+</blockquote>
+
+<p>deal with sophisticated chunk placement and replication logic.But master doesn’t read or write data to client.</p>
+
+<p>Metadata.</p>
+
+<p>Chunk Locations.</p>
+
+<p><strong>Operation Log</strong></p>
+
+<p>chunkservers: just like databases.</p>
+<blockquote>
+  <p>Chunkservers store chunks on local disks as Linux files and read or write chunk data specified by a chunk handle and byte range
+By default, we store three replicas, though users can designate different replication levels for different regions of the file namespace.</p>
+</blockquote>
+
+<p>client: bridge of master and chunkservers</p>
+<blockquote>
+  <p>Clients interact with the master for metadata opera- tions, but all data-bearing communication goes directly to the chunkservers.</p>
+</blockquote>
+
+<p><strong>Neither the client nor the chunkserver caches file data.</strong></p>
+
+<h2 id="consistency-model">Consistency Model</h2>
+
+<p>The state of file region:<strong>consistent</strong>,<strong>defined</strong>,the two state combain with two types(serial,concurrent)</p>
+
+<p>just like database’s transcations ?</p>
+
+
+<!-- Comments only for posts -->
+
+    
+        <hr class="divider">
+<div id="disqus_thread"></div>
+<script defer>
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = '//takijoe.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the comments</noscript>
+                              
+    
+
+
+            </article>
+        </main>
+
+        <footer>
+            <p class="copy">
+                <small>Copyrights by
+                    Joe
+                    | Developed by
+                    <a href="http://webjeda.com">webjeda</a>
+                </small>
+            </p>
+        </footer>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157580785-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-157580785-1');
+</script>
+    </body>
+
+</html>

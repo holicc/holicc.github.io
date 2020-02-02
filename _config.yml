@@ -1,1 +1,51 @@
-theme: jekyll-theme-hacker
+### your site title here
+
+title: Joe
+description: nothing 
+email: 497295670@qq.com
+
+
+highlighter: rouge
+markdown: kramdown
+
+excerpt_separator: \n
+
+
+paginate: 5
+
+
+# Tracker
+analytics: UA-157580785-1
+
+# Comments
+disqus-shortname: takijoe
+
+
+#optimization
+#compress.html
+compress_html:
+  clippings: [html,div, p, ul, td, h1, h2, h3, h4,link, meta, footer, nav, img, header, hr, br, head, style, li, ul, ol, time, main, script, title]
+  comments: ["<!-- ", " -->"]
+  endings: [all]
+  ignore:
+    envs: [remote]
+  blanklines: false
+  profile: false
+  startings: []
+
+
+sass:
+  sass_dir: /assets/css/_sass
+  style: compressed
+
+include:
+  - _pages
+
+exclude:
+  - README.md
+  - LICENSE.md
+
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate

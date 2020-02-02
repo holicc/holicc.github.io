@@ -1,6 +1,11 @@
-# 【译】Java实现大小可变的数组
+---
+layout: post
+title: 【译】Java实现大小可变的数组
+---
 
-    有时为了快速的访问数据（特别是byte类型），需要将数据放入一个单独且连续的数组中，且数组至少是能够可扩张的。由于Java中的数组是不能够改变其大小的，所以使用数组本身是不能够满足需求的。因此，为了能够容纳原生类型并且可改变其大小的数组，需要自己动手实现。
+# Java实现大小可变的数组
+
+> 有时为了快速的访问数据（特别是byte类型），需要将数据放入一个单独且连续的数组中，且数组至少是能够可扩张的。由于Java中的数组是不能够改变其大小的，所以使用数组本身是不能够满足需求的。因此，为了能够容纳原生类型并且可改变其大小的数组，需要自己动手实现。
 
 ## 为什么不使用ArrayList？
 
@@ -64,7 +69,7 @@ ResizableArray代表了一个单一的，可扩容的数组，接收到的数据
 
 这里有一个图来解释ResizableArrayBuffer中的三部分是如何划分的。
 
-![resizeable-array](/images/resizable-array-1.png)
+![resizeable-array](/assets/images/resizable-array-1.png)
 
 整个ResizableArrayBuffer的大数组中保留一个数据大小的间隙(small, medium, large)，我们需要确保每个数据块都不会被完全充满。例如，接收的small数据块不能占满medium和large的内存区块。同样的large数据块不能占满small和medium的内存区块。
 
