@@ -3,8 +3,6 @@ layout: post
 title: 【译】Java实现大小可变的数组
 ---
 
-# Java实现大小可变的数组
-
 > 有时为了快速的访问数据（特别是byte类型），需要将数据放入一个单独且连续的数组中，且数组至少是能够可扩张的。由于Java中的数组是不能够改变其大小的，所以使用数组本身是不能够满足需求的。因此，为了能够容纳原生类型并且可改变其大小的数组，需要自己动手实现。
 
 ## 为什么不使用ArrayList？
@@ -193,6 +191,6 @@ resizableArray.free();
 
 跟Java中ArrayList实现方式有点类似。为了提升性能尽量要使用原生数据类型，时刻注意数据的回收利用。
 
-## 引用
+## 原文
 
 1.[resizable-array](http://tutorials.jenkov.com/java-performance/resizable-array.html)
