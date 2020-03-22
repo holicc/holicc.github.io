@@ -64,8 +64,8 @@ menu:
 
 
 params:
-  since: 2020
-  dateFormatToUse: "2020-01-02"
+  since: 2017
+  dateFormatToUse: "2006-01-02"
   enablePostCopyright: true
   # the directory under content folder that you want to render
   mainSections: ["posts"]
