@@ -51,7 +51,7 @@
   {{ end -}}
   {{ $css := resources.Get "css/style.css" | minify | fingerprint}}
   <link rel="stylesheet" href="{{ $css.Permalink }}">
-  <link rel="shortcut icon " type="images/x-icon" href="{{- $site.favicon | absURL }}">
+  <link rel="shortcut icon " type="images/x-icon" href="favicon.ico">
   {{ with .Site.Params.customCSS }}
   <link rel="stylesheet" href="{{ . | absURL }}" async>{{ end }}
   <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.15.10/styles/github.min.css" async>
