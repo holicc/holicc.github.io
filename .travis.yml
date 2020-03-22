@@ -5,7 +5,7 @@ go:
 
 branches:
   only:
-  - master
+  - ci
 
 sudo: required
 dist: bionic
