@@ -37,4 +37,4 @@ deploy:
 
 env:
   global:
-    - REF=github.com/LuLongShan/lulongshan.github.io # 设置 github 地址
+    - REF=github.com/holicc/holicc.github.io # 设置 github 地址
