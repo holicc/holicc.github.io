@@ -31,9 +31,9 @@ deploy:
   verbose: true
   keep-history: true
   local-dir: public
-  target_branch: gh-pages  # branch contains blog content
+  target_branch: master  # branch contains blog content
   on:
-    branch: master
+    branch: ci
 
 env:
   global:
