@@ -118,7 +118,7 @@ params:
       url: favicon.png
     title: Joe # 页面title
     favicon: favicon.png
-    board: <p>The Truth~</p> # 公告牌
+    board: <p>The Truth</p> # 公告牌
 
   # Share
   # weibo,qq,qzone,wechat,tencent,douban,diandian,facebook,twitter,google,linkedin
@@ -191,7 +191,6 @@ params:
 
   # Sidebar only the following widgets. you can remove any you don't like it.
   widgets:
-    - board
     - category
     - tag
     - recent_posts
