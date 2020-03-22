@@ -1,13 +1,13 @@
-+++
-author = "Joe"
-title = "About TCP Protocol"
-date = "2020-03-22"
-description = "Learning TCP Protocol"
-tags = [
-    "network",
-    "tcp"
-]
-+++
+---
+title: About TCP Protocol
+date: 2020-03-22
+categories:
+  - protocol
+
+tags:
+    - networking
+    - tcp
+---
 
 ## What is TCP ?
 
