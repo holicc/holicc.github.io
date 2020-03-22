@@ -115,7 +115,7 @@ params:
       enabled: true
       width: 40
       height: 40
-      url: favicon.ico
+      url: https://lulongshan.github.io/favicon.ico
     title: Joe # 页面title
     favicon: favicon.ico
     board: <p>enjoy~</p> # 公告牌
