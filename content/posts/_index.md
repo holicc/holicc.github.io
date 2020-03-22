@@ -1,6 +1,10 @@
-+++
-aliases = ["posts","articles","blog","showcase","docs"]
-title = "Posts"
-author = "Hugo Authors"
-tags = ["index"]
-+++
+---
+title: About TCP Protocol
+date: 2020-03-22
+categories:
+  - protocol
+
+tags:
+    - networking
+    - tcp
+---
