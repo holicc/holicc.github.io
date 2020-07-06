@@ -1,6 +1,6 @@
 ---
 title: Rust Data Types
-date: 2020-07-04
+date: 2020-07-05
 categories:
   - programing
 markup: mmark
