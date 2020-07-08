@@ -127,4 +127,89 @@ fn main() {
 }
 ```
 
-完(有点水了)!   
+由于Rust是一门拥有面向对象和函数编程的语言，所以在Rust中可以对`struct`对象定义所属的方法
+其中使用了`impl`和`self`关键字，语义上还是能够理解的。
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+}
+```
+本来以为挺简单的，但是结合上了所有权系统一切都变得复杂了；
+
+>We’ve chosen &self here for the same reason we used &Rectangle in the function version: we don’t want to take ownership, and we just want to read the data in the struct, not write to it. If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use &mut self as the first parameter. Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.
+
+```rust
+fn area(&self) -> u32 {
+        self.width * self.height
+}
+```
+
+这个方法始终保持了类型函数的意思,这里的`self`其实就是函数中的`Rectangle`相当于**move** ，加上`&`后就是**Borrowing**。当方法需要修改struct实例的中的属性的时候就需要使用`&mut self`,当需要所有权移交的时候就使用`self`;
+
+原来如此，也没有想象的那么复杂（可能吧）。
+
+把函数放到**Impl**块中叫做**关联函数**`associated functions`相当于Java中的静态方法,通过struct直接调用,就像`String::from()`
+
+Rust也允许定义对同一个struct多个**Impl**块
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+    let rect2 = Rectangle {
+        width: 10,
+        height: 40,
+    };
+    let rect3 = Rectangle {
+        width: 60,
+        height: 45,
+    };
+
+    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+}
+```
+
+
+完!   
