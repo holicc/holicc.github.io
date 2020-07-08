@@ -73,7 +73,7 @@ fn main() {
     struct Color(i32, i32, i32);
     struct Point(i32, i32, i32);
 
-    let black = Color(0, 0, 0);
+    let black = Color(0, 0, 0);     
     let origin = Point(0, 0, 0);
 }
 ```           
@@ -108,6 +108,23 @@ fn main() {
 
 好像是这样的,可以的,Rust强(吹)!
 
-![string-slice](string-slice.png)
+想要像在Java中一样自由的打印对象,需要在struct上进行一些特殊处理,相当于需要实现一个`toString()`方法一样.
 
-完(有点水了)!
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!("rect1 is {:?}", rect1);
+}
+```
+
+完(有点水了)!   
