@@ -26,3 +26,13 @@ New-Item [path]
 ```powershell
 Start-Process notepad $file
 ```
+
+打开文件夹
+
+```powershell
+ii .
+```
+或者
+```powershell
+Invoke-Item .
+```
