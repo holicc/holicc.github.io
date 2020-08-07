@@ -9,6 +9,12 @@ tags:
     - powershell
 ---
 
+Unix时间戳：
+
+```powershell
+Get-Date -UFormat %s
+```
+
 查看文件（类似cat的功能）
 
 ```powershell
