@@ -1,5 +1,5 @@
 ---
-title: Rust Struct
+title: Rust Features
 date: 2020-08-05
 categories:
   - programing
