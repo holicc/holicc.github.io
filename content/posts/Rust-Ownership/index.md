@@ -21,6 +21,8 @@ tags:
 
 >All data stored on the stack must have a known, fixed size. Data with an unknown size at compile time or a size that might change must be stored on the heap instead
 
+编译期间能够知道大小的变量是分配到栈上，无法确定大小的就是分配到堆上。（也不是绝对的）
+
 这个点不知道，记录一下
 
 >When your code calls a function, the values passed into the function (including, potentially, pointers to data on the heap) and the function’s local variables get pushed onto the stack. When the function is over, those values get popped off the stack.
