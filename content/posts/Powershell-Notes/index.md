@@ -42,3 +42,12 @@ ii .
 ```powershell
 Invoke-Item .
 ```
+
+函数别名
+
+```powershell
+Set-Alias 
+```
+
+[如何配置PowerShell Profile](如何配置PowerShell Profile)
+ 
