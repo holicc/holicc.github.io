@@ -8,7 +8,6 @@ math: true
 tags:
     - http
     - web
-    - log
 ---
 
 ## [Copy]Logout: GET or POST
