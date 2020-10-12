@@ -1,12 +1,11 @@
 ---
-title: Logout: GET or POST?
+title: Logout GET or POST
 date: 2020-09-10
 categories:
-  - network
+  - programing
 markup: mmark
 math: true
 tags:
-    - http
     - web
 ---
 
