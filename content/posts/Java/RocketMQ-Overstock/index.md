@@ -1,5 +1,5 @@
 ---
-title: Rust Function
+title: RocketMQ
 date: 2020-07-12
 categories:
   - programing
