@@ -81,3 +81,9 @@ eg: *ElasticSearch*
     Responses return the most readily available version of the data available on any node, which might not be the latest. Writes might take some time to propagate when the partition is resolved.
     
     AP is a good choice if the business needs allow for eventual consistency or when the system needs to continue working despite external errors.
+    
+    
+### Materials
+
+ - [Paxos算法](https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95)
+ - [拜占庭将军问题](https://zh.wikipedia.org/wiki/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98)
