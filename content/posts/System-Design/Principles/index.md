@@ -17,6 +17,8 @@ tags:
  * [Database replication](#database-replication)
  * [Database partitioning](#database-partitioning)
  * [CAP theorem](#cap-theorem)
+ * [Domain name system](#domain-name-system)
+ * [Content delivery network](#content-delivery-network)
 
 ### Vertical scaling
 
@@ -82,7 +84,20 @@ eg: *ElasticSearch*
     
     AP is a good choice if the business needs allow for eventual consistency or when the system needs to continue working despite external errors.
     
+### Domain name system
+
+    DNS is hierarchical, with a few authoritative servers at the top level. Your router or ISP provides information about which DNS server(s) to contact when doing a lookup. Lower level DNS servers cache mappings, which could become stale due to DNS propagation delays. DNS results can also be cached by your browser or OS for a certain period of time, determined by the time to live (TTL).
     
+[more](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd197427(v=ws.10)?redirectedfrom=MSDN)
+    
+### Content delivery network
+
+    A CDN helps to speed up static components of your blog (especially pictures of say, your bed in Rome) by distributing them across a number of servers around the world. This does two things – one is to put much of your travel blog’s content closer to the person who wants to view it. So, a person in Japan will download your beautiful photos of Granada from Tokyo, rather than your server sitting in Boston, for example. Less distance traveled means a faster download and secondly, if the content isn’t being pulled directly from your server, it saves overall computing power (important to have plenty of for when traffic gets really busy).    
+    
+Serving content from CDNs can significantly improve performance in two ways:
+    - Users receive content from data centers close to them    
+    - Your servers do not have to serve requests that the CDN fulfills
+
 ### Materials
 
  - [Paxos算法](https://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95)
