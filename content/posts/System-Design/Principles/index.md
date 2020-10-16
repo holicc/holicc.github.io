@@ -47,6 +47,15 @@ Good examples of horizontal scaling are *Cassandra, MongoDB*
 
     In computing, **load balancing** refers to the process of distributing a set of tasks over a set of resources (computing units), with the aim of making their overall processing more efficient. Load balancing techniques can optimize the response time for each task, avoiding unevenly overloading compute nodes while other compute nodes are left idle.
 
+        Load balancers can route traffic based on various metrics, including:
+        
+- Random
+- Least loaded
+- Session/cookies
+- Round robin or weighted round robin
+- Layer 4
+- Layer 7
+
 [more](https://en.wikipedia.org/wiki/Load_balancing_(computing))
 
 ### Database replication
