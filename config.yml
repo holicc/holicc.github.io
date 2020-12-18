@@ -97,13 +97,13 @@ params:
     gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
     author: Joe
     author_title: Hello World
-    author_description: people are resources
-    location: ChengDu, China
-    follow: https://github.com/LuLongShan
+    author_description: (def live = code)
+    location: -----, XXXX
+    follow: https://holicc.github.io/
     # Social Links
     social:
       links:
-        github: https://github.com/LuLongShan
+        github: https://holicc.github.io/
         # weibo: http://weibo.com/{yourid}
         # twitter: https://twitter.com/
         # facebook: /
