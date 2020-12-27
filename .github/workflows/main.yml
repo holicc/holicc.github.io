@@ -2,7 +2,7 @@ name: github pages
 
 on:
   push:
-    branches:
+    branches: 
       - ci  # Set a branch to deploy
 
 jobs:
