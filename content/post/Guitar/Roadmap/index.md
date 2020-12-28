@@ -22,6 +22,7 @@ If your starting out at guitar, I’d recommend to tackle two parallel streams o
 In terms of single note playing, you will probably want to start with some simple exercises to build coordination and synchronise your right and left hands. I always recommend a student starts practicing the 1 – 2 – 3 – 4 exercise right from day one. In this exercise you ascend the fretboard playing one note with each of your four left hand fingers for each position:
 
 Ascending：
+
     E|--1--2--3--4--2--3--4--5--3--4--5--6-          -8--9--10--11--9--10--11--12-
     B|-------------------------------------          -----------------------------
     G|-------------------------------------          -----------------------------
@@ -30,6 +31,7 @@ Ascending：
     E|-------------------------------------          -----------------------------
 
 Descending:
+
     E|--12--11--10--9--11--10--9--8--10--9--8--7-         -5--4--3--2--4--3--2--1-
     B|-------------------------------------------         ------------------------
     G|-------------------------------------------         ------------------------
