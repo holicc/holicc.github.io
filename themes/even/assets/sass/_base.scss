@@ -14,7 +14,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: $global-lineheight;
   color: $global-font-color;
-  background: $global-background;
+//  background: $global-background;
+  background-image: url('../../static/img/air.png');
+  
   scroll-behavior: smooth;
   border-top: 3px solid $theme-color;
 }
