@@ -1,4 +1,13 @@
+---
+title: Doom-Emacs
+date: 2021-02-06
+categories:
+  - emacs
+tags:
+    - emacs
+---
 #+Learning-Emacs:
+
 * Intro
 i'm new to eamcs.And now i'm writing this article with /`Doom Emacs`/.Its really awesome!
 Using the laptop of win10 and run eamcs in terminal with wsl2. All thing go pretty well...
