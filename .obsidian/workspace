@@ -1,0 +1,93 @@
+{
+  "main": {
+    "id": "926e68b3669cbb29",
+    "type": "split",
+    "children": [
+      {
+        "id": "e7d998742a614288",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "content/post/Algorithm/Raft/index.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ff71003713fffd0d",
+    "type": "split",
+    "children": [
+      {
+        "id": "c2b4a188b53c5aaf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "96a7bcb2684378fc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "ee8ede4e8fff2404",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ff79110e9c9bfced",
+    "type": "split",
+    "children": [
+      {
+        "id": "3192952eb8c73c85",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "84dbd772a93bc498",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "content/post/Algorithm/Raft/index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "e7d998742a614288",
+  "lastOpenFiles": [
+    "content/post/Algorithm/Raft/index.md"
+  ]
+}
