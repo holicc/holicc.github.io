@@ -59,6 +59,8 @@
 {{- if .Site.Params.busuanzi.enable -}}
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 {{- end -}}
+<!-- google adsence -->
+<script data-ad-client="ca-pub-7877604046340220" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 <!-- Styles -->
 {{ $style := resources.Get "sass/main.scss" | toCSS | minify | fingerprint }}
