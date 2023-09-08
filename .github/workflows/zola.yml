@@ -1,13 +1,15 @@
+name: Zola on GitHub Pages
+
 on:
   push:
     branches:
-      - ci 
+      - main 
   pull_request:
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/ci'
+    if: github.ref != 'refs/heads/main'
     steps:
       - name: Checkout main
         uses: actions/checkout@v3.0.0
@@ -17,12 +19,10 @@ jobs:
           BUILD_DIR: docs
           BUILD_ONLY: true
           BUILD_FLAGS: --drafts
-          # A GitHub token is not necessary when BUILD_ONLY is true
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   build_and_deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/ci'
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout main
         uses: actions/checkout@v3.0.0
@@ -30,5 +30,5 @@ jobs:
         uses: shalzz/zola-deploy-action@v0.17.2
         env:
           BUILD_DIR: docs
-          PAGES_BRANCH: master
+          PAGES_BRANCH: gh-pages
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
