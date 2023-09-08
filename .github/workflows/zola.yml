@@ -2,6 +2,7 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
     steps:
       - name: 'checkout'
         uses: actions/checkout@v3.0.0
@@ -18,6 +19,8 @@ jobs:
     steps:
       - name: 'checkout'
         uses: actions/checkout@v3.0.0
+      - name: 'show dirs'
+        run: ls -al
       - name: 'build and deploy'
         uses: shalzz/zola-deploy-action@v0.17.2
         env:
