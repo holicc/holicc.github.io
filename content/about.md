@@ -1,12 +1,6 @@
 +++
 title = "About"
-description = ""
-date = "2020-01-01"
-aliases = ["about-us","contact"]
-author = "Joe"
 +++
+This is an about page, nothing more nothing less `forget about it`.
 
-Java、Rust、Golang
-
-
-
+{{ youtube(id="pS6zJ7IsJkM" class="textCenter") }}
