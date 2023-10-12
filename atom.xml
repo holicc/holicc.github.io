@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title></title>
+    <link href="https://holicc.github.io/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://holicc.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-09-08T00:00:00+00:00</updated>
+    <id>https://holicc.github.io/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Why doesn&#x27;t my future became !Send?</title>
+        <published>2023-09-08T00:00:00+00:00</published>
+        <updated>2023-09-08T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://holicc.github.io/blog/rust-future/" type="text/html"/>
+        <id>https://holicc.github.io/blog/rust-future/</id>
+        
+        <content type="html">&lt;h2 id=&quot;background&quot;&gt;Background&lt;&#x2F;h2&gt;
+&lt;p&gt;Recently, I face a problem when i use &lt;code&gt;auxm&lt;&#x2F;code&gt; http framework, which is&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span&gt;the &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;trait&lt;&#x2F;span&gt;&lt;span&gt; `Handler&amp;lt;_, _, _&amp;gt;` is not implemented &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;item
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;after i using &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;axum&#x2F;latest&#x2F;axum&#x2F;handler&#x2F;index.html#debugging-handler-type-errors&quot;&gt;auxm-debugging-marcos&lt;&#x2F;a&gt;. I fanlly found the probelm is &lt;code&gt;Future is not Send&lt;&#x2F;code&gt;.Bacause is auxm the &lt;code&gt;Handler&lt;&#x2F;code&gt; tarit, we can see the tarit has a &lt;strong&gt;asoccsiation type&lt;&#x2F;strong&gt; Futrue need to be &lt;strong&gt;Send&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub trait &lt;&#x2F;span&gt;&lt;span&gt;Handler&amp;lt;T, S, B = Body&amp;gt;: Clone + Send + Sized + &amp;#39;static {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;type &lt;&#x2F;span&gt;&lt;span&gt;Future: Future&amp;lt;Output = Response&amp;gt; + Send + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;static&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Required method
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;call&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;req&lt;&#x2F;span&gt;&lt;span&gt;: Request&amp;lt;B&amp;gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;state&lt;&#x2F;span&gt;&lt;span&gt;: S) -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self::&lt;&#x2F;span&gt;&lt;span&gt;Future;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Provided methods
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;layer&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;L, NewReqBody&amp;gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;layer&lt;&#x2F;span&gt;&lt;span&gt;: L
+&lt;&#x2F;span&gt;&lt;span&gt;    ) -&amp;gt; Layered&amp;lt;L, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self&lt;&#x2F;span&gt;&lt;span&gt;, T, S, B, NewReqBody&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;where&lt;&#x2F;span&gt;&lt;span&gt; L: Layer&amp;lt;HandlerService&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self&lt;&#x2F;span&gt;&lt;span&gt;, T, S, B&amp;gt;&amp;gt; + Clone,
+&lt;&#x2F;span&gt;&lt;span&gt;             &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;L::&lt;&#x2F;span&gt;&lt;span&gt;Service: Service&amp;lt;Request&amp;lt;NewReqBody&amp;gt;&amp;gt; { ... }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;with_state&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;state&lt;&#x2F;span&gt;&lt;span&gt;: S) -&amp;gt; HandlerService&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;Self&lt;&#x2F;span&gt;&lt;span&gt;, T, S, B&amp;gt; { ... }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I wandering why my async function return a &lt;code&gt;!Send Futrue&lt;&#x2F;code&gt;.So I&#x27;m starting to dig debug my code. After a while, I found the bug in my code:&lt;&#x2F;p&gt;
+&lt;p&gt;Bacause I tried to make &lt;code&gt;parse_statement&lt;&#x2F;code&gt; to be a async function, but in this function the variable &lt;code&gt;Parser&lt;&#x2F;code&gt;  has a field &lt;code&gt;RecursionCounter&lt;&#x2F;code&gt; which is has a field &lt;code&gt;Rc&amp;lt;AtomicUsize&amp;gt;&lt;&#x2F;code&gt; !!. As all we known &lt;code&gt;Rc&lt;&#x2F;code&gt; is not Send. So that&#x27;s make &lt;code&gt;parse_statement&lt;&#x2F;code&gt; return a Futrue is not Send.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub&lt;&#x2F;span&gt;&lt;span&gt; async &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;parse_statement&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sql&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; Result&amp;lt;Statement&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;        ...
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; parser = Parser::new(dialect).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;with_tokens_with_locations&lt;&#x2F;span&gt;&lt;span&gt;(tokens);
+&lt;&#x2F;span&gt;&lt;span&gt;        ...
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;Parser&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;#39;a&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    ...
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;recursion_counter&lt;&#x2F;span&gt;&lt;span&gt;: RecursionCounter,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;crate&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;RecursionCounter {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;remaining_depth&lt;&#x2F;span&gt;&lt;span&gt;: Rc&amp;lt;AtomicUsize&amp;gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &#x27;bug&#x27; is really easy to fix. We just need to split the async code and non-async code so that we can avoid returning a Future that is not Send. After I solved the &#x27;bug&#x27;, I still didn&#x27;t know why this bug occurred so I decided to write this blog to figure out the relationship between Send, !Send, and Future.&lt;&#x2F;p&gt;
+&lt;p&gt;That&#x27;s base from those questions:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;What&#x27;s the Future?&lt;&#x2F;li&gt;
+&lt;li&gt;What&#x27;s the Send?&lt;&#x2F;li&gt;
+&lt;li&gt;Why Future not Send?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;what-s-the-future&quot;&gt;What&#x27;s the Future?&lt;&#x2F;h2&gt;
+&lt;h2 id=&quot;what-s-the-send&quot;&gt;What&#x27;s the Send?&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;59428096&#x2F;understanding-the-send-trait&quot;&gt;understanding-the-send-trait&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-future-not-send&quot;&gt;Why Future not Send?&lt;&#x2F;h2&gt;
+</content>
+        
+    </entry>
+</feed>

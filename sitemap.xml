@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://holicc.github.io/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/about/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/blog/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/blog/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/blog/rust-future/</loc>
+        <lastmod>2023-09-08</lastmod>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/tags/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/tags/async/</loc>
+    </url>
+    <url>
+        <loc>https://holicc.github.io/tags/rust/</loc>
+    </url>
+</urlset>

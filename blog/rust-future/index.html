@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="robots" content="index, follow">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <title>Why doesn&#x27;t my future became !Send?</title>
+    
+    
+    
+    <meta name="title" content="Why doesn&#x27;t my future became !Send?">
+    
+    
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://holicc.github.io/blog/rust-future/">
+    
+    <meta property="og:site_name" content="">
+    
+    
+    <meta property="og:title" content="Why doesn&#x27;t my future became !Send?">
+    
+    
+    
+    
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://holicc.github.io/blog/rust-future/">
+    
+    <meta property="twitter:title" content="Why doesn&#x27;t my future became !Send?">
+    
+    
+    
+    
+    <link rel="canonical" href="https://holicc.github.io/blog/rust-future/">
+    
+    
+    
+    
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="https://holicc.github.io/atom.xml">
+    
+    
+    
+    <link rel="stylesheet" href="https://holicc.github.io/css/style.css"/>
+    
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        
+        <nav class="navBar">
+          
+          
+          
+          <a href="https://holicc.github.io" >&#x2F;home&#x2F;</a>
+          
+          
+          
+          
+          <a href="https://holicc.github.io/about" >&#x2F;about&#x2F;</a>
+          
+          
+          
+          
+          <a href="https://holicc.github.io/journal" >&#x2F;journal&#x2F;</a>
+          
+          
+          
+          
+          <a href="https://holicc.github.io/blog" >&#x2F;blog&#x2F;</a>
+          
+          
+          <div class="themeSwitch">
+            <button class="themeButton light" onclick="setTheme('light')" title="Light mode">◐</button>
+            <button class="themeButton dark" onclick="setTheme('dark')" title="Dark mode">◑</button>
+          </div>
+        </nav>
+        
+        <script>
+          const setTheme = (theme) => {
+              document.documentElement.className = theme;
+              localStorage.setItem('theme', theme);
+          }
+          const getTheme = () => {
+              const theme = localStorage.getItem('theme');
+              theme && setTheme(theme);
+          }
+          getTheme()
+        </script>
+      </header>
+      <main>
+        
+
+
+<h2>Table of contents</h2>
+<ul>
+
+  <li>
+  <a href="https://holicc.github.io/blog/rust-future/#background">Background</a>
+  
+  </li>
+
+  <li>
+  <a href="https://holicc.github.io/blog/rust-future/#what-s-the-future">What&#x27;s the Future?</a>
+  
+  </li>
+
+  <li>
+  <a href="https://holicc.github.io/blog/rust-future/#what-s-the-send">What&#x27;s the Send?</a>
+  
+  </li>
+
+  <li>
+  <a href="https://holicc.github.io/blog/rust-future/#why-future-not-send">Why Future not Send?</a>
+  
+  </li>
+
+</ul>
+
+
+
+<h2 id="background">Background</h2>
+<p>Recently, I face a problem when i use <code>auxm</code> http framework, which is</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>the </span><span style="color:#b48ead;">trait</span><span> `Handler&lt;_, _, _&gt;` is not implemented </span><span style="color:#b48ead;">for fn </span><span style="color:#8fa1b3;">item
+</span></code></pre>
+<p>after i using <a href="https://docs.rs/axum/latest/axum/handler/index.html#debugging-handler-type-errors">auxm-debugging-marcos</a>. I fanlly found the probelm is <code>Future is not Send</code>.Bacause is auxm the <code>Handler</code> tarit, we can see the tarit has a <strong>asoccsiation type</strong> Futrue need to be <strong>Send</strong></p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub trait </span><span>Handler&lt;T, S, B = Body&gt;: Clone + Send + Sized + &#39;static {
+</span><span>    </span><span style="color:#b48ead;">type </span><span>Future: Future&lt;Output = Response&gt; + Send + </span><span style="color:#b48ead;">&#39;static</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Required method
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">call</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">req</span><span>: Request&lt;B&gt;, </span><span style="color:#bf616a;">state</span><span>: S) -&gt; </span><span style="color:#b48ead;">Self::</span><span>Future;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Provided methods
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">layer</span><span>&lt;L, NewReqBody&gt;(
+</span><span>        </span><span style="color:#bf616a;">self</span><span>,
+</span><span>        </span><span style="color:#bf616a;">layer</span><span>: L
+</span><span>    ) -&gt; Layered&lt;L, </span><span style="color:#b48ead;">Self</span><span>, T, S, B, NewReqBody&gt;
+</span><span>       </span><span style="color:#b48ead;">where</span><span> L: Layer&lt;HandlerService&lt;</span><span style="color:#b48ead;">Self</span><span>, T, S, B&gt;&gt; + Clone,
+</span><span>             </span><span style="color:#b48ead;">L::</span><span>Service: Service&lt;Request&lt;NewReqBody&gt;&gt; { ... }
+</span><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">with_state</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">state</span><span>: S) -&gt; HandlerService&lt;</span><span style="color:#b48ead;">Self</span><span>, T, S, B&gt; { ... }
+</span><span>}
+</span></code></pre>
+<p>I wandering why my async function return a <code>!Send Futrue</code>.So I'm starting to dig debug my code. After a while, I found the bug in my code:</p>
+<p>Bacause I tried to make <code>parse_statement</code> to be a async function, but in this function the variable <code>Parser</code>  has a field <code>RecursionCounter</code> which is has a field <code>Rc&lt;AtomicUsize&gt;</code> !!. As all we known <code>Rc</code> is not Send. So that's make <code>parse_statement</code> return a Futrue is not Send.</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub</span><span> async </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">parse_statement</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">sql</span><span>: &amp;</span><span style="color:#b48ead;">str</span><span>) -&gt; Result&lt;Statement&gt; {
+</span><span>        ...
+</span><span>        </span><span style="color:#b48ead;">let mut</span><span> parser = Parser::new(dialect).</span><span style="color:#96b5b4;">with_tokens_with_locations</span><span>(tokens);
+</span><span>        ...
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">pub struct </span><span>Parser&lt;</span><span style="color:#b48ead;">&#39;a</span><span>&gt; {
+</span><span>    ...
+</span><span>    </span><span style="color:#bf616a;">recursion_counter</span><span>: RecursionCounter,
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">pub</span><span>(</span><span style="color:#b48ead;">crate</span><span>) </span><span style="color:#b48ead;">struct </span><span>RecursionCounter {
+</span><span>    </span><span style="color:#bf616a;">remaining_depth</span><span>: Rc&lt;AtomicUsize&gt;,
+</span><span>}
+</span></code></pre>
+<p>The 'bug' is really easy to fix. We just need to split the async code and non-async code so that we can avoid returning a Future that is not Send. After I solved the 'bug', I still didn't know why this bug occurred so I decided to write this blog to figure out the relationship between Send, !Send, and Future.</p>
+<p>That's base from those questions:</p>
+<ul>
+<li>What's the Future?</li>
+<li>What's the Send?</li>
+<li>Why Future not Send?</li>
+</ul>
+<h2 id="what-s-the-future">What's the Future?</h2>
+<h2 id="what-s-the-send">What's the Send?</h2>
+<p><a href="https://stackoverflow.com/questions/59428096/understanding-the-send-trait">understanding-the-send-trait</a></p>
+<h2 id="why-future-not-send">Why Future not Send?</h2>
+
+
+      </main>
+      <footer>
+        
+<p class="tagsData">
+
+
+<a href="/tags/rust">&#47;rust&#47;</a>
+
+<a href="/tags/async">&#47;async&#47;</a>
+
+
+</p>
+
+        <hr>
+        <div class=footContainer>
+          <div class="footLeft">
+            <p>Licensed under <a target="_blank" rel="noopener noreferrer" href="https://fr.wikipedia.org/wiki/Licence_MIT">MIT</a><br>
+              Built with <a target="_blank" rel="noopener noreferrer" href="https://www.getzola.org">Zola</a> using <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/anemone">anemone</a> theme &amp; <a target="_blank" rel="noopener noreferrer" href="https://github.com/Speyll/veqev">veqev</a> colors.<br>
+            </p>
+          </div>
+          <div class="footRight">
+            <!-- Size 46x46 -->
+            <img class="footGif noStyle" loading="lazy" src="https://i.ibb.co/XYDpfcs/foot.gif" alt="footGif">
+            <a class="metaData" target="_blank" rel="noopener noreferrer" href="https://holicc.github.io/atom.xml" title="Subscribe via RSS for updates.">RSS</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
